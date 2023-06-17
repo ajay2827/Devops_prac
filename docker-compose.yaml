@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  #mongo-db service
+  database:
+   container_name: database_mongo
+   image: mongo:latest
+   restart: always
+   ports:
+    - 27017:27017
+  
+  #node-js application 
+  application:
+   container_name: app1
+   build: .
+   ports:
+    - 4000:3000
+   environment:
+    PORT: 3000
+    MONGODB_URI: mongodb://database_mongo:27017
+    DB_NAME: db_collection0    
+    NAME: Ajax Singh
+   depends_on:
+    - database
